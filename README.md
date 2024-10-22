@@ -21,8 +21,6 @@ A simple app that display real-time weather conditions.
 
 
 # Screenshot
-![Interface](https://github.com/user-attachments/assets/2f81a3eb-ccd4-47a4-aace-fd79014d645d)
-
-
+![Interface](https://github.com/user-attachments/assets/8e718435-c2a7-4b9e-a799-e9c6100a0099)
 
 
