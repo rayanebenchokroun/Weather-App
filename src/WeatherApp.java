@@ -1,3 +1,4 @@
+import exceptions.LocationNotFoundException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,7 +14,7 @@ import java.util.Scanner;
 public class WeatherApp {
 
     // Méthode principale pour obtenir les données météo en fonction du nom de la ville
-    public static JSONObject getWeatherData(String locationName) {
+    public static JSONObject getWeatherData(String locationName) throws LocationNotFoundException {
         // Récupération des données de localisation à partir du nom du lieu
         JSONArray locationData = getLocationData(locationName);
 
@@ -87,7 +88,7 @@ public class WeatherApp {
     }
 
     // Méthode pour obtenir les données de localisation en fonction du nom de la ville
-    public static JSONArray getLocationData(String locationName) {
+    public static JSONArray getLocationData(String locationName) throws LocationNotFoundException {
         // Remplace les espaces par des '+' pour l'URL
         locationName = locationName.replaceAll(" ", "+");
 
@@ -119,13 +120,18 @@ public class WeatherApp {
 
                 // Retourne les résultats de localisation sous forme de JSONArray
                 JSONArray locationData = (JSONArray) resultsJsonObj.get("results");
+
+                if (locationData == null) {
+                    throw new LocationNotFoundException(locationName);
+                }
                 return locationData;
+
             }
+
         } catch (Exception e) {
-            e.printStackTrace(); // Gère les exceptions
+            throw new LocationNotFoundException(locationName);
         }
 
-        return null;
     }
 
     // Méthode pour envoyer une requête HTTP GET et obtenir une réponse

@@ -1,3 +1,4 @@
+import exceptions.LocationNotFoundException;
 import org.json.simple.JSONObject;
 
 import javax.imageio.ImageIO;
@@ -89,7 +90,12 @@ public class WeatherAppGUI extends JFrame {
                 }
 
                 // Récupération des données météo pour la ville saisie
-                weatherData = WeatherApp.getWeatherData(userInput);
+                try {
+                    weatherData = WeatherApp.getWeatherData(userInput);
+                } catch (LocationNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "This place does not exist.");
+                    return;
+                }
 
                 // Si les données météo ne sont pas disponibles, afficher un message d'erreur
                 if (weatherData == null) {
